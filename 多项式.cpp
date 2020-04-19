@@ -24,5 +24,3 @@ class Shi
 			return end;
 		}
 };
-/*wangbo test*/
-/* test 3*/
