@@ -3,34 +3,34 @@ using namespace std;
 
 class Duoxiang
 {
-protected:
-	double xishu;
-	int zhishu;
+	protected:
+		double xishu;
+		int zhishu;
 	
-public:
-	Duoxiang(Duoxiang &r):zhishu(r.get_zhishu),xishu(r.get_xishu){}
-	Duoxiang * Next = NULL;
-	Duoxiang(double a, int n);
-	int get_zhishu(void) { return zhishu; }
-	double get_xishu(void) { return xishu; }
+	public:
+		Duoxiang(Duoxiang &r):zhishu(r.get_zhishu),xishu(r.get_xishu){}
+		Duoxiang * Next = NULL;
+		Duoxiang(double a, int n);
+		int get_zhishu(void) { return zhishu; }
+		double get_xishu(void) { return xishu; }
 };
 
 class Shi
 {
-protected:
-	Duoxiang *head;
-	Duoxiang *end;
-public:
-	Duoxiang *Gethead()
-	{
-		return head;
-	}
-	Duoxiang *Getend()
-	{
-		return end;
-	}
-	friend Shi* operator + (const Shi &a, const Shi &b);
-	friend Shi* operator - (const Shi &a, const Shi &b);
+	protected:
+		Duoxiang *head;
+		Duoxiang *end;
+	public:
+		Duoxiang *Gethead()
+		{
+			return head;
+		}
+		Duoxiang *Getend()
+		{
+			return end;
+		}
+		friend Shi* operator + (const Shi &a, const Shi &b);
+		friend Shi* operator - (const Shi &a, const Shi &b);
 };
 /*
 	write by 王波 2020/4/20
