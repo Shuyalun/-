@@ -8,7 +8,7 @@ protected:
 	int zhishu;
 
 public:
-	//Duoxiang(Duoxiang &r):zhishu(r.get_zhishu),xishu(r.get_xishu){}
+	Duoxiang(Duoxiang &r):zhishu(r.get_zhishu()),xishu(r.get_xishu()){}
 	Duoxiang * Next = NULL;
 	Duoxiang() { zhishu = 0; xishu = 0; }
 	Duoxiang(double a, int n) { xishu = a; zhishu = n; }
@@ -32,8 +32,8 @@ public:
 	}
 	Shi() { head = new Duoxiang; end = head; }
 	friend istream & operator >> (istream &out, Shi &l);
-	friend Shi* operator + (const Shi &a, const Shi &b);
-	friend Shi* operator - (const Shi &a, const Shi &b);
+	friend Shi operator + (const Shi &a, const Shi &b);
+	friend Shi operator - (const Shi &a, const Shi &b);
 	friend ostream & operator << (ostream &out, Shi &l);
 };
 
@@ -56,23 +56,26 @@ istream & operator >> (istream &in, Shi &l)
 	return in;
 }
 
-Shi* operator + (const Shi &a, const Shi &b)
+Shi operator + (const Shi &a, const Shi &b)
 {
-	Shi * result = new Shi;
-	Duoxiang *p = NULL, *q = NULL, *temp = NULL, *r = result->head;
+	Shi result;
+	Duoxiang *p = NULL, *q = NULL, *temp = NULL, *r = result.head;
 	double sum;
-	p = a.head;
-	q = b.head;
-	while (p&&q)
+	p = a.head->Next;
+	q = b.head->Next;
+	while (p!=NULL && q!=NULL)
 	{
 		if (p->get_zhishu() == q->get_zhishu())
 		{
 			sum = p->get_xishu() + q->get_xishu();
 			if (sum != 0)
 			{
+				
 				temp = new Duoxiang(sum, p->get_zhishu());
 				r = temp;
-				r = r->Next;
+				result.end->Next = r;
+				//r = r->Next;
+				result.end = r;
 				p = p->Next;
 				q = q->Next;
 			}
@@ -83,14 +86,18 @@ Shi* operator + (const Shi &a, const Shi &b)
 			{
 				temp = new Duoxiang(*p);
 				r = temp;
-				r = r->Next;
+				result.end->Next = r;
+				//r = r->Next;
+				result.end = r;
 				p = p->Next;
 			}
 			else
 			{
 				temp = new Duoxiang(*q);
 				r = temp;
-				r = r->Next;
+				result.end->Next = r;
+				//r = r->Next;
+				result.end = r;
 				q = q->Next;
 			}
 		}
@@ -103,7 +110,9 @@ Shi* operator + (const Shi &a, const Shi &b)
 			temp = new Duoxiang(*q);
 			q = q->Next;
 			r = temp;
-			r = r->Next;
+			result.end->Next = r;
+			//r = r->Next;
+			result.end = r;
 		}
 	}
 	if (p != NULL&&q == NULL)
@@ -113,18 +122,20 @@ Shi* operator + (const Shi &a, const Shi &b)
 			temp = new Duoxiang(*p);
 			p = p->Next;
 			r = temp;
-			r = r->Next;
+			result.end->Next = r;
+			//r = r->Next;
+			result.end = r;
 		}
 	}
 	return result;
 }
-Shi* operator - (const Shi &a, const Shi &b)
+Shi operator - (const Shi &a, const Shi &b)
 {
-	Shi * result = new Shi;
-	Duoxiang *p = NULL, *q = NULL, *temp = NULL, *r = result->head;
+	Shi result ;
+	Duoxiang *p = NULL, *q = NULL, *temp = NULL, *r = result.head;
 	double sum;
-	p = a.head;
-	q = b.head;
+	p = a.head->Next;
+	q = b.head->Next;
 	while (p&&q)
 	{
 		if (p->get_zhishu() == q->get_zhishu())
@@ -134,8 +145,9 @@ Shi* operator - (const Shi &a, const Shi &b)
 			{
 				temp = new Duoxiang(sum, p->get_zhishu());
 				r = temp;
-				result->end = r;
-				r = r->Next;
+				result.end->Next = r;
+				//r = r->Next;
+				result.end = r;
 				p = p->Next;
 				q = q->Next;
 			}
@@ -146,16 +158,19 @@ Shi* operator - (const Shi &a, const Shi &b)
 			{
 				temp = new Duoxiang(*p);
 				r = temp;
-				result->end = r;
-				r = r->Next;
+				result.end->Next = r;
+				//r = r->Next;
+				result.end = r;
 				p = p->Next;
 			}
 			else
 			{
-				temp = new Duoxiang(*q);
+				temp = new Duoxiang(-p->get_xishu(),p->get_zhishu());
+				
 				r = temp;
-				result->end = r;
-				r = r->Next;
+				result.end->Next = r;
+				//r = r->Next;
+				result.end = r;
 				q = q->Next;
 			}
 		}
@@ -165,11 +180,12 @@ Shi* operator - (const Shi &a, const Shi &b)
 	{
 		while (q != NULL)
 		{
-			temp = new Duoxiang(*q);
+			temp = new Duoxiang(-q->get_xishu(), q->get_zhishu());;
 			q = q->Next;
 			r = temp;
-			result->end = r;
-			r = r->Next;
+			result.end->Next = r;
+			//r = r->Next;
+			result.end = r;
 		}
 	}
 	if (p != NULL&&q == NULL)
@@ -179,8 +195,9 @@ Shi* operator - (const Shi &a, const Shi &b)
 			temp = new Duoxiang(*p);
 			p = p->Next;
 			r = temp;
-			result->end = r;
-			r = r->Next;
+			result.end->Next = r;
+			//r = r->Next;
+			result.end = r;
 		}
 	}
 	return result;
