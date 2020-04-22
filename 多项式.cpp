@@ -31,6 +31,7 @@ class Shi
 		}
 		friend Shi* operator + (const Shi &a, const Shi &b);
 		friend Shi* operator - (const Shi &a, const Shi &b);
+		friend ostream & operator << (ostream &out, Shi &l);
 };
 /*
 	write by 王波 2020/4/20
@@ -166,4 +167,29 @@ Shi* operator - (const Shi &a, const Shi &b)
 		}
 	}
 	return result;
+}
+ostream & operator << (ostream &out, Shi &l)
+{
+	Duoxiang *p=l.head->Next;
+	while(p)
+	{
+		if(p->get_zhishu==0)
+		{
+			out<<p->get_xishu();
+		}
+		else if(p->get_zhishu==1)
+		{
+			out<<p->get_xishu()<<"x";
+		}
+		else
+		{
+			out<<p->get_xishu()<<"x"<<p->get_zhishu();
+		}
+		if(p->Next)
+		{
+			out<<"+";
+		}
+		p=p->Next;
+	}
+	return out;
 }
