@@ -187,29 +187,43 @@ Shi* operator - (const Shi &a, const Shi &b)
 }
 ostream & operator << (ostream &out, Shi &l)
 {
-	Duoxiang *p = l.head->Next;
-	while (p)
+	Duoxiang *p=l.head->Next;
+	while(p)
 	{
-		if (p->get_zhishu() == 0)
+		if(p->get_zhishu==0)
 		{
-			out << p->get_xishu();
+			out<<p->get_xishu();
 		}
-		else if (p->get_zhishu() == 1)
+		else if(p->get_zhishu==1)
 		{
-			out << p->get_xishu() << "x";
+			if(p->get_xishu()==1)
+			{
+				out<<"x";
+			} 
+			else
+			{
+				out<<p->get_xishu()<<"x";
+			}
 		}
 		else
 		{
-			out << p->get_xishu() << "x" << p->get_zhishu();
-		}
-		if (p->Next)
-		{
-			if (p->Next->get_xishu()>0)
+			if(p->get_xishu()==1)
 			{
-				out << "+";
+				out<<"x"<<p->get_zhishu();
+			} 
+			else
+			{
+				out<<p->get_xishu()<<"x"<<p->get_zhishu();
 			}
 		}
-		p = p->Next;
+		if(p->Next)
+		{
+			if(p->Next->get_xishu()>0) 
+			{
+				out<<"+";
+			}
+		}
+		p=p->Next;
 	}
 	return out;
 }
