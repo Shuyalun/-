@@ -187,7 +187,10 @@ ostream & operator << (ostream &out, Shi &l)
 		}
 		if(p->Next)
 		{
-			out<<"+";
+			if(p->Next->get_xishu()>0) 
+			{
+				out<<"+";
+			}
 		}
 		p=p->Next;
 	}
