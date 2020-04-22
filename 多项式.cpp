@@ -8,9 +8,10 @@ class Duoxiang
 		int zhishu;
 	
 	public:
-		Duoxiang(Duoxiang &r):zhishu(r.get_zhishu),xishu(r.get_xishu){}
+		//Duoxiang(Duoxiang &r):zhishu(r.get_zhishu),xishu(r.get_xishu){}
 		Duoxiang * Next = NULL;
-		Duoxiang(double a, int n);
+		Duoxiang(){zhishu=0;xishu=0;}
+		Duoxiang(double a, int n){xishu=a;zhishu=n;}
 		int get_zhishu(void) { return zhishu; }
 		double get_xishu(void) { return xishu; }
 };
@@ -29,22 +30,38 @@ class Shi
 		{
 			return end;
 		}
+		Shi(){head=new Duoxiang;end=head;}
+		friend istream & operator >> (istream &out, Shi &l);
 		friend Shi* operator + (const Shi &a, const Shi &b);
 		friend Shi* operator - (const Shi &a, const Shi &b);
 		friend ostream & operator << (ostream &out, Shi &l);
 };
+
 /*
 	write by 王波 2020/4/20
 	多项式相加函数
 	返回结果多项式的 Shi*
 	*/
+istream & operator >> (istream &in, Shi &l)
+{
+	int x,z;char c;Duoxiang*p;
+	while(1)
+	{
+		in>>x>>z;c=getchar();
+		p=new Duoxiang(x,z);
+		l.end->Next=p;
+		l.end=p;
+		if(c=='\n')break;
+	}
+	return in;
+}
 
 Shi* operator + (const Shi &a, const Shi &b)
 {
 	Shi * result=new Shi;
 	Duoxiang *p = NULL, *q = NULL, *temp = NULL, *r = result->head;
 	double sum;
-	p = a.Gethead;
+	p = a.head;
 	q = b.head;
 	while (p&&q)
 	{
@@ -195,4 +212,8 @@ ostream & operator << (ostream &out, Shi &l)
 		p=p->Next;
 	}
 	return out;
+}
+int main()
+{
+	return 0;
 }
